@@ -1,0 +1,7 @@
+.idea/
+bin/
+include/
+lib/
+.idea/vcs.xml
+.Python
+pip-selfcheck.json
