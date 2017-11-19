@@ -1,45 +1,30 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView
-
-
+from django.views.generic import TemplateView, ListView
+from .models import RestaurantLocation
 # Create your views here.
-# function based view
-#
-# def home(request):
-#     # return HttpResponse("hello")
-#     content = {
-#         "content": "hello request"
-#     }
-#     return render(request, template_name="home.html", context=content)  # response
-#
-#
-# def about(request):
-#     content = {
-#         "content": "about request"
-#     }
-#     return render(request, template_name="about.html", context=content)
-#
-#
-# def contact(request):
-#     content = {
-#         "content": "contact request"
-#     }
-#     return render(request, template_name="contact.html", context=content)
 
 
-# class based view
+def restaurant_listview(request):
+    template_name = 'restaurants/restaurants_list.html'
+    queryset = RestaurantLocation.objects.all()
+    context = {
+        "object_list": queryset
+    }
+    return render(request, template_name=template_name, context=context)
 
 
-class HomeView(TemplateView):
+class RestaurantListView(ListView):
+    queryset = RestaurantLocation.objects.all()
+    template_name = 'restaurants/restaurants_list.html'
 
-    template_name = 'home.html'
 
-    def get_context_data(self,*args, **kwargs):
-        context = super(HomeView,self).get_context_data(*args, **kwargs)
-        context = {
-            "content": "hello from class view"
-        }
+class BurgerRestaurantListView(ListView):
+    queryset = RestaurantLocation.objects.filter(category__iexact='burgers')
+    template_name = 'restaurants/restaurants_list.html'
 
-        return context
+
+class ChickenRestaurantListView(ListView):
+    queryset = RestaurantLocation.objects.filter(category__contains='Chicken')
+    template_name = 'restaurants/restaurants_list.html'
