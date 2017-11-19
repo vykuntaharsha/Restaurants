@@ -7,7 +7,7 @@ from .models import RestaurantLocation
 
 
 def restaurant_listview(request):
-    template_name = 'restaurants/restaurants_list.html'
+    template_name = 'restaurants/restaurantlocation_list.html'
     queryset = RestaurantLocation.objects.all()
     context = {
         "object_list": queryset
@@ -16,15 +16,11 @@ def restaurant_listview(request):
 
 
 class RestaurantListView(ListView):
-    queryset = RestaurantLocation.objects.all()
-    template_name = 'restaurants/restaurants_list.html'
 
-
-class BurgerRestaurantListView(ListView):
-    queryset = RestaurantLocation.objects.filter(category__iexact='burgers')
-    template_name = 'restaurants/restaurants_list.html'
-
-
-class ChickenRestaurantListView(ListView):
-    queryset = RestaurantLocation.objects.filter(category__contains='Chicken')
-    template_name = 'restaurants/restaurants_list.html'
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        if slug:
+            queryset = RestaurantLocation.objects.filter(category__contains=slug)
+        else:
+            queryset = RestaurantLocation.objects.all()
+        return queryset
