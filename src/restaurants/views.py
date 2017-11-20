@@ -19,6 +19,7 @@ def restaurant_creatview(request):
     context = {"form": form, "errors": errors}
     return render(request,template_name,context)
 
+
 def restaurant_listview(request):
     template_name = 'restaurants/restaurantlocation_list.html'
     queryset = RestaurantLocation.objects.all()
