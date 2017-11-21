@@ -2,7 +2,7 @@
 {% block head_title %} Restaurants|{{block.super}} {% endblock head_title %}
 
 {% block content %}
-<h1>Menu Items</h1>
+<h1>Menu Items <small><a href="{% url 'menus:create' %}"> add+ </a></small></h1>
 
 <ul>
     {% for obj in object_list %}
@@ -26,6 +26,8 @@
         {% endif %}
 
     </li>
+    {% empty %}
+    <li><a href="{% url 'menus:create' %}"> add item </a></li>
     {% endfor %}
 </ul>
 
