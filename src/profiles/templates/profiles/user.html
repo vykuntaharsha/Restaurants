@@ -6,17 +6,21 @@
 <hr/>
 {% if user.restaurantlocation_set.all.exists %}
 {% for restaurant in user.restaurantlocation_set.all  %}
-    <li> <b>{{restaurant.name}}</b> {{restaurant.location}} | {{ restaurant.category }}<br/>
-        <ul>
-                {% for item in restaurant.item_set.all %}
-                    <li style="margin-bottom: 25px"> {{ item.name }}<br/>
-                    {% for ing in item.get_contents %}
-                    <span style="padding: 2px 4px; margin-right: 4px; background-color: #cccccc">{{ing}},</span>
-                    {% endfor %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-default" style="margin-bottom: 15px">
+            <h4>{{restaurant.name}}</h4>
+                <p>{{restaurant.location}} | {{ restaurant.category }}</p>
+                <ul>
+                    {% for item in restaurant.item_set.all %}
+                    <li style="margin-bottom: 25px"><b>{{ item.name }}</b><br/>
+                        {{ item.contents }}
                     </li>
-                {% endfor %}
-        </ul>
-    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endfor %}
 {% else %}
 <p class="lead" >No Restaurants found</p>
