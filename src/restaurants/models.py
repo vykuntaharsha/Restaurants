@@ -3,6 +3,7 @@ from django.db.models.signals import pre_save, post_save
 from .utils import unique_slug_generator
 from .validators import validate_category
 from django.conf import settings
+from django.core.urlresolvers import reverse
 # Create your models here.
 
 
@@ -24,6 +25,9 @@ class RestaurantLocation(models.Model):
     @property
     def title(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("restaurants:detail", kwargs={'slug': self.slug})
 
 
 def rl_pre_save_receiver(sender, instance, *args, **kwargs):
