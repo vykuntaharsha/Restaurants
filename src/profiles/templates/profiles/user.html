@@ -4,17 +4,24 @@
 {% block content %}
 <h1>{{ user.username }}</h1>
 <hr/>
-{% if user.restaurantlocation_set.all.exists %}
-{% for restaurant in user.restaurantlocation_set.all  %}
+<form class="form-row" method="get" action=".">
+    <input type="text" placeholder="search" name="q" value="{{ request.GET.q }}">
+    <button class="submit-row" type="submit" > search </button>
+</form><br/>
+{% if locations %}
+{% for restaurant in locations  %}
     <div class="row">
         <div class="col-sm-12">
             <div class="card card-default" style="margin-bottom: 15px">
             <h4>{{restaurant.name}}</h4>
-                <p>{{restaurant.location}} | {{ restaurant.category }}</p>
+                <p><a href="{{ request.path }}?q={{restaurant.location}}"> {{restaurant.location}}</a> |
+                    <a href="{{ request.path }}?q={{restaurant.category}}"> {{ restaurant.category }}</a></p>
                 <ul>
                     {% for item in restaurant.item_set.all %}
                     <li style="margin-bottom: 25px"><b>{{ item.name }}</b><br/>
-                        {{ item.contents }}
+                        {% for ing in item.get_contents %}
+                        <a href="{{ request.path }}?q={{ing}}"> {{ ing }}</a>
+                        {% endfor %}
                     </li>
                     {% endfor %}
                 </ul>
@@ -23,6 +30,6 @@
     </div>
 {% endfor %}
 {% else %}
-<p class="lead" >No Restaurants found</p>
+<p class="lead" >No Items found</p>
 {% endif %}
 {% endblock content%}
