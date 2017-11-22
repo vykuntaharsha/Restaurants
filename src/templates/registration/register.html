@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card card-default col-md-6" align="left" style="padding: 10px">
+    <h1> Register </h1>
+    <form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="register" />
+    </form>
+    <p>did you need to <a href="{% url 'login' %}"> login</a>? </p>
+</div>
+{% endblock %}
