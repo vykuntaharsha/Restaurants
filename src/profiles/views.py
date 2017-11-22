@@ -10,7 +10,6 @@ from .models import Profile
 
 User = get_user_model()
 
-
 class ProfileFollowToggle(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
