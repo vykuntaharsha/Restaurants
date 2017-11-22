@@ -1,6 +1,10 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
+from .utils import code_generator
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.contrib.sites.shortcuts import get_current_site
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
@@ -23,6 +27,7 @@ class ProfileManager(models.Manager):
 class Profile(models.Model):
     user = models.OneToOneField(User)
     followers = models.ManyToManyField(User, related_name='is_following', blank=True)
+    activation_key = models.CharField(max_length=120, blank=True, null=True)
     activated = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -33,7 +38,24 @@ class Profile(models.Model):
         return self.user.username
 
     def send_activation_email(self):
-        pass
+        if not self.activated:
+            self.activation_key = code_generator()
+            self.save()
+            current_site = get_current_site()
+            path_ = current_site+reverse('activate', kwargs={"code": self.activation_key})
+            subject = 'Activate account'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            message = f'Activate your account here: {path_}'
+            recipient_list = [self.user.email]
+            html_message = f'<p>Activate your account here: {path_}</p>'
+            send_email = send_mail(subject,
+                                   message,
+                                   from_email,
+                                   recipient_list,
+                                   fail_silently=False,
+                                   html_message=html_message)
+            return send_email
+
 
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     if created:

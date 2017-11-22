@@ -12,6 +12,22 @@ from .forms import RegisterForm
 User = get_user_model()
 
 
+def activate_user_view(request, code=None, *args, **kwargs):
+    if code:
+        act_profile_qs = Profile.objects.filter(activation_key=code)
+        if act_profile_qs.exists() and act_profile_qs.count() == 1:
+            act_obj = act_profile_qs.first()
+            if not act_obj.activated:
+                user_obj = act_obj.user
+                user_obj.is_active = True
+                user_obj.save()
+                act_obj.activated = True
+                act_obj.activation_key = None
+                act_obj.save()
+                return redirect("/login")
+            return redirect("/login")
+
+
 class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = "registration/register.html"
@@ -20,7 +36,7 @@ class RegisterView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return redirect("/logout")
-        return super(RegisterView, self).dispatch(*args, **kwargs)
+        return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
 
 class ProfileFollowToggle(LoginRequiredMixin, View):

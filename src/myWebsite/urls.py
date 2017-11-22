@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView,PasswordResetView, LogoutView
-from profiles.views import ProfileFollowToggle, RegisterView
+from profiles.views import ProfileFollowToggle, RegisterView, activate_user_view
 from menus.views import HomeView
 
 urlpatterns = [
@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^activate/(?P<code>[a-z0-9].*)/$', activate_user_view, name='activate'),
     url(r'^reset-password', PasswordResetView.as_view(), name='password_reset'),
     url(r'^profile-follow/$', ProfileFollowToggle.as_view(), name='follow'),
     url(r'^restaurants/', include('restaurants.urls', namespace='restaurants')),

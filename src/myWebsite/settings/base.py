@@ -27,6 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'harsha.bobby.vy@gmail.com'
+EMAIL_HOST_PASSWORD = 'seattle123'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+ADMINS = (
+    ('Harsha', 'harshavardhan.biit@gmail.com'),
+)
+MANAGERS = ADMINS
 
 # Application definition
 
