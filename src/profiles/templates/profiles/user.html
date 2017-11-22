@@ -3,11 +3,12 @@
 
 {% block content %}
 <h1>{{ user.username }}</h1>
-<hr/>
-<form class="form-inline" method="get" action=".">
+<p>{% include 'profiles/snippets/follow_form.html' with username=user.username is_following=is_following %}</p>
+<form class="form" method="get" action=".">
     <input type="text" placeholder="search" name="q" value="{{ request.GET.q }}">
-    <button class="btn btn-primary btn-sm" type="submit" > search </button>
+    <button class="btn btn-default btn-sm" type="submit" > search </button>
 </form><br/>
+<hr/>
 {% if locations %}
 {% for restaurant in locations  %}
     <div class="row">

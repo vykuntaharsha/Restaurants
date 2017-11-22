@@ -1,0 +1,7 @@
+{% if request.user.is_authenticated %}
+<form class="form" method="POST" action='{% url "follow" %}'>{% csrf_token%}
+<input type="hidden" name="username" value="{% if username %}{{username}}{% else %}{{bobby}}{% endif %}"/>
+    <button class="button {% if is_following %} btn-default {% else %} btn-primary {% endif %}">
+        {% if is_following %} unfollow {% else %} follow {% endif %}</button>
+</form>
+{% endif %}
