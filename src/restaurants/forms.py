@@ -10,7 +10,7 @@ class RestaurantCreateForm(forms.Form):
 
 
 class RestaurantLocationCreateForms(forms.ModelForm):
-    # category = forms.CharField(required=False, validators=[validate_category])
+    category = forms.CharField(required=False, validators=[validate_category])
 
     class Meta:
         model = RestaurantLocation

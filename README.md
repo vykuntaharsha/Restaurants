@@ -18,8 +18,10 @@ Install the following
 
 ### Installing
 
-Download/clone the repository. Recommended to use a virtual enviroment where django-1.11 is installed. Open terminal and change directory to src. Run this command to start the server.  
+Download/clone the repository. Recommended to use a virtual enviroment where django-1.11 is installed. Open terminal and run these commands to start the server.  
 ```python
+source bin/activate
+cd src
 python manage.py runserver
 ```  
 
