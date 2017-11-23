@@ -27,7 +27,7 @@ python manage.py runserver
 
 * python
 * django
-* postgreSQL
+* SQLite
 * pyCharm
 * bootstrap
 * Jquery
