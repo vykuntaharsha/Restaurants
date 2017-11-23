@@ -18,13 +18,19 @@ Install the following
 
 ### Installing
 
-Download/clone the repository. Recommended to use a virtual enviroment where django-1.11 is installed. Open terminal and run these commands to start the server.  
+Download/clone the repository. Recommended to use a virtual environment. Open terminal and run these commands to start the server.  
 ```python
+cd your-local-repository-path
+python3 -m venv Restaurants
+cd Restaurants
 source bin/activate
 cd src
-python manage.py runserver
+pip install -r requirements.txt
 ```  
-
+Run the following after setting up and every time you want to start server
+```
+python3 mange.py runserver
+```
 ### Built With
 
 * python
