@@ -4,7 +4,6 @@ from django.db.models.signals import post_save
 from .utils import code_generator
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.contrib.sites.shortcuts import get_current_site
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
@@ -41,8 +40,7 @@ class Profile(models.Model):
         if not self.activated:
             self.activation_key = code_generator()
             self.save()
-            current_site = get_current_site()
-            path_ = current_site+reverse('activate', kwargs={"code": self.activation_key})
+            path_ = reverse('activate', kwargs={"code": self.activation_key})
             subject = 'Activate account'
             from_email = settings.DEFAULT_FROM_EMAIL
             message = f'Activate your account here: {path_}'
